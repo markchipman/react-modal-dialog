@@ -40,7 +40,7 @@ const makeAnimation = (elements = [], type = 'enter', animation = 'fade', durati
 
         bindOnce(elements[0], animationendEvents, () => {
             elements.forEach((element, index) => {
-                element.classList.remove(prefixer + effectConfig[index > 0 ? animation : 'fade'][type]);
+                element.classList.remove(prefixer + effectConfig[index + 1 == elements.length  ? animation : 'fade'][type]);
             });
 
             resolve();
@@ -48,7 +48,7 @@ const makeAnimation = (elements = [], type = 'enter', animation = 'fade', durati
 
         setTimeout(resolve, duration);
         elements.forEach((element, index) => {
-            element.classList.add(prefixer + effectConfig[index > 0 ? animation : 'fade'][type]);
+            element.classList.add(prefixer + effectConfig[index + 1 == elements.length ? animation : 'fade'][type]);
         });
     });
 }
