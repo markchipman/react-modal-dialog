@@ -4,7 +4,7 @@ React component: modal and Dialog
 js使用 es6 编写，css基于scss，所以项目开发环境必须基于 es6 + sass 环境。  
 支持浏览器：已测试 ie9+、chrome45+、ios safari 8.0+  
 
-Demo online: [点此查看](http://u.boy.im/reacrt-modal-dialog/#/dialog)  
+Demo online: [点此查看](http://u.boy.im/react-modal-dialog/#/dialog)  
 
 具体使用可以查看项目中 demo.jsx 文件
 
