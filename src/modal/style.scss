@@ -34,10 +34,10 @@
 }
 
 .modal-animation-fade{
-    animation:modal-fade .6s ease;
+    animation:modal-fade .45s ease-in-out;
 }
 .modal-animation-fadeOut{
-    animation:modal-fade .6s ease reverse both;
+    animation:modal-fade .45s ease-in-out reverse both;
 }
 @keyframes modal-fade{
     from {
@@ -49,10 +49,10 @@
 }
 
 .modal-animation-slide{
-    animation:modal-slide .6s ease;
+    animation:modal-slide .45s ease-in-out;
 }
 .modal-animation-slideOut{
-    animation:modal-slide .6s ease reverse both;
+    animation:modal-slide .45s ease-in-out reverse both;
 }
 @keyframes modal-slide{
     from {
@@ -68,10 +68,10 @@
 }
 
 .modal-animation-zoom{
-    animation:modal-zoom .6s ease;
+    animation:modal-zoom .45s ease-in-out;
 }
 .modal-animation-zoomOut{
-    animation:modal-zoom .6s ease reverse both;
+    animation:modal-zoom .45s ease-in-out reverse both;
 }
 @keyframes modal-zoom{
     from {

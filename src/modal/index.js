@@ -29,7 +29,7 @@ const defaultSettings = {
     size: 'lg', //lg md sm dialog,
     backdrop: true,
     animation: false,
-    animationDuration: 600
+    animationDuration: 500
 }
 
 let zIndex = 1340;
@@ -124,6 +124,6 @@ export const open = (settings = {}) => {
 
 export const closeAll = () => modalInstances.forEach(instance => instance.dismiss());
 
-export const count = () => modalInstances.length; window.closeAll = closeAll; window.count = count;
+export const count = () => modalInstances.length;
 
 export default {open, count, closeAll};
