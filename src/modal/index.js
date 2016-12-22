@@ -98,7 +98,7 @@ export const open = (settings = {}) => {
             settings.component = component;
         }
 
-        unmountComponentAtNode(modalElement);
+        //unmountComponentAtNode(modalElement);
 
         reactRender(<ModalContainer
                     modalElements={elements}

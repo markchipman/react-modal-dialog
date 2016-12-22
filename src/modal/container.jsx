@@ -17,27 +17,41 @@ class ModalContainer extends Component {
         );
     }
 
-    dismissHandler = ev => {
+    eventHandler = ev => {
         const {container} = this.refs;
-        if(container != ev.target && !container.contains(ev.target)) {
-            this.props.dismiss();
+
+        if (ev.type == 'click') {
+            container != ev.target && !container.contains(ev.target) &&
+                this.props.dismiss();
+        } else {
+            ev.preventDefault();
+            ev.stopPropagation();
         }
+    }
+
+    getEvents() {
+        let events = ['touchmove', 'mousewheel', 'DOMMouseScroll'];
+        if(this.props.backdrop != 'static') {
+            events.push('click');
+        }
+
+        return events;
     }
 
     componentDidMount() {
-        const {modalElements, backdrop} = this.props;
-        if(backdrop != 'static') {
-            modalElements[modalElements.length - 1]
-                .addEventListener('click', this.dismissHandler, false);
-        }
+        const {modalElements} = this.props;
+        const element = modalElements[modalElements.length - 1];
+
+        this.getEvents().forEach(event =>
+                                 element.addEventListener(event, this.eventHandler, false));
     }
 
     componentWillUnmount() {
-        const {modalElements, backdrop} = this.props;
-        if(backdrop != 'static') {
-            modalElements[modalElements.length - 1]
-                .removeEventListener('click', this.dismissHandler, false);
-        }
+        const {modalElements} = this.props;
+        const element = modalElements[modalElements.length - 1];
+
+        this.getEvents().forEach(event =>
+                                 element.removeEventListener(event, this.eventHandler, false));
     }
 
     static propTypes = {
