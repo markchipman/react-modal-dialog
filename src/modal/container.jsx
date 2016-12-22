@@ -39,16 +39,14 @@ class ModalContainer extends Component {
     }
 
     componentDidMount() {
-        const {modalElements} = this.props;
-        const element = modalElements[modalElements.length - 1];
+        const element = this.refs.container.parentNode;
 
         this.getEvents().forEach(event =>
                                  element.addEventListener(event, this.eventHandler, false));
     }
 
     componentWillUnmount() {
-        const {modalElements} = this.props;
-        const element = modalElements[modalElements.length - 1];
+        const element = this.refs.container.parentNode;
 
         this.getEvents().forEach(event =>
                                  element.removeEventListener(event, this.eventHandler, false));

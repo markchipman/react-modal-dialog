@@ -43,14 +43,16 @@ export const open = (settings = {}) => {
     let elements = createElementFromString((settings.backdrop ? `<div class="modal-backdrop" style="z-index:${zIndex};"></div>` : '') +
                                              `<div style="z-index:${zIndex};" class="modal${settings.windowTopClass ? ' ' + settings.windowTopClass : ''}"></div>`);
     let modalElement = elements[elements.length - 1];
+    let animationElements = [];
+
+    if(elements.length > 1) {
+        animationElements.push(elements[0]);
+    }
 
     let bodyStyle = document.body.style;
     let original_overflow = bodyStyle.overflow;
 
     let withResolve, withReject, instance, destroying;
-
-    //绑定进入时动画
-    makeAnimation(elements, 'enter', settings.animation, settings.animationDuration);
 
     //销毁组件
     const destroy = () => {
@@ -61,7 +63,7 @@ export const open = (settings = {}) => {
         destroying = true;
 
         //绑定离开时动画
-        makeAnimation(elements, 'leave', settings.animation, settings.animationDuration)
+        makeAnimation(animationElements, 'leave', settings.animation, settings.animationDuration)
             .then(() => {
                 unmountComponentAtNode(modalElement);
 
@@ -93,7 +95,11 @@ export const open = (settings = {}) => {
 
     bodyStyle.overflow = 'hidden';
 
-    function render(component) {
+    function render(component, onComplete) {
+        if(destroying) {
+            return;
+        }
+
         if (!isValidElement(settings.component)) {
             unmountComponentAtNode(modalElement);
         }
@@ -102,11 +108,11 @@ export const open = (settings = {}) => {
             settings.component = component;
         }
 
-        reactRender(<ModalContainer
+        return reactRender(<ModalContainer
                     modalElements={elements}
                     {...settings}
                     close={close}
-                    dismiss={dismiss} />, modalElement);
+                    dismiss={dismiss} />, modalElement, onComplete);
     }
 
     instance = {
@@ -114,12 +120,16 @@ export const open = (settings = {}) => {
         result: new Promise((resolve, reject) => {
             withResolve = resolve;
             withReject = reject;
-
-            render();
         })
     }
 
     modalInstances.push(instance);
+
+    render(null, () => {
+        animationElements.push(modalElement.children[0]);
+        //绑定进入时动画
+        makeAnimation(animationElements, 'enter', settings.animation, settings.animationDuration);
+    });
 
     return instance;
 }
