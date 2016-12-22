@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {isValidElement} from 'react';
 import {render as reactRender, unmountComponentAtNode} from 'react-dom';
 import ModalContainer from './container';
 import makeAnimation from './makeAnimation';
@@ -94,11 +94,13 @@ export const open = (settings = {}) => {
     bodyStyle.overflow = 'hidden';
 
     function render(component) {
+        if (!isValidElement(settings.component)) {
+            unmountComponentAtNode(modalElement);
+        }
+
         if(component){
             settings.component = component;
         }
-
-        //unmountComponentAtNode(modalElement);
 
         reactRender(<ModalContainer
                     modalElements={elements}
